@@ -5,3 +5,4 @@ requests
 pandas
 seaborn
 matplotlib
+pytest
