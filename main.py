@@ -15,12 +15,16 @@ import pefile
 # Relevant modules
 from features.asm import ASMExtractor
 from features.section_info import SectionInfoExtractor
+from features.checksum import ChecksumExtractor
+from features.import_info import ImportInfoExtractor
 #from features.virustotal import VirusTotalExtractor
 
 # Dictionary of available feature extractors, along with keyword arguments
 feature_extractors = {
   ASMExtractor: None,
   SectionInfoExtractor: None,
+  ChecksumExtractor: None,
+  ImportInfoExtractor: None,
   #VirusTotalExtractor: None # should the API key be a keyword argument?
 }
 
