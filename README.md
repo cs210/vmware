@@ -6,6 +6,8 @@ This repository defines a product that provides a comprehensive approach to file
 
 ## Setup Instructions
 
+### General Setup
+
 Create a virtual environment (for sake of example, called `venv`):
 ```
 python3 -m virtualenv venv
@@ -14,10 +16,26 @@ Enter your virtual environment
 ```
 source venv/bin/activate
 ```
-Install requirements
+Install requirements (second only required if running the web application)
 ```
 pip3 install -r requirements.txt
+pip3 install -r webapp/backend/requirements.txt
 ```
+
+### Web Application Instructions
+
+Run the backend server (in `webapp/backend`), accessed at `127.0.0.1:5000`
+```
+FLASK_APP=app.py FLASK_ENV=development flask run
+```
+Build and serve the frontend (in `webapp/frontend`), accessed at `127.0.0.1:3000`
+```
+npm install -g serve
+npm run build
+serve -s build -l 3000
+```
+### CLI Instructions
+
 Extract sample features on a PE file
 ```
 python3 main.py --file=[FILENAME]
@@ -28,12 +46,12 @@ Extract features for multiple files into a dataframe and generate visualizations
 python3 main.py --dir=[DIRECTORY] --label=[0 or 1]
 ```
 
-Run randomforest on extracted features
+Run a random forest on extracted features
 ```
 python3 random_forest.py --file=[FILENAME]
 ```
 
-To generate images for comparing feature distributions for associated columns for bad and good PE Files
+Generate images for comparing feature distributions for associated columns for bad and good PE Files
 ```
 python3 main.py --good=[GoodPE CSV] --bad=[BadPE CSV]
 ```
