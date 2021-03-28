@@ -30,10 +30,19 @@ if __name__ == '__main__':
   parser.add_argument('--file', type=str, required=False, help="Input PE file to extract features for")
   parser.add_argument('--dir', type=str, required=False, help="Directory containing PE files to extract features for")
   parser.add_argument('--label', type=int, required=False, default=1, help="Label for the PE Files you are processing")
-  parser.add_argument('--good', type=str, required=False, help="Directory containing PE files to extract features for")
-  parser.add_argument('--bad', type=str, required=False, help="Directory containing PE files to extract features for")
+  parser.add_argument('--good', type=str, required=False, help="Directory containing good PE files to extract features for")
+  parser.add_argument('--bad', type=str, required=False, help="Directory containing bad PE files to extract features for")
 
   args = parser.parse_args()
+
+  name = str(random.randint(1111, 9999))
+  directory_name = 'data_' + name
+  directory = os.path.join(os.getcwd(), 'data')
+  if not os.path.isdir(directory):
+    os.mkdir(directory)
+
+  os.chdir(os.getcwd()+'/data')
+
 
   if args.file and args.dir:
     parser.error('specify either directory or file')
@@ -61,13 +70,12 @@ if __name__ == '__main__':
     df = pd.DataFrame(rows)
     df['label'] = args.label
 
-    directory = os.path.join(os.getcwd(), 'data')
+    directory = os.path.join(os.getcwd(), directory_name)
     if not os.path.isdir(directory):
       os.mkdir(directory)
 
-    name = str(random.randint(1111,9999))
     df.to_csv(directory + '/features_' + name + ".csv")
-    directory = os.path.join(os.getcwd(), 'data/images')
+    directory = os.path.join(os.getcwd(), directory_name+'/images')
     if not os.path.isdir(directory):
       os.mkdir(directory)
 
@@ -75,8 +83,9 @@ if __name__ == '__main__':
     fig, axes = plt.subplots(ncols=10, figsize=(22.9, 5))
     for ax, col in zip(axes, df.columns):
       plot = sns.distplot(df[col], ax=ax)
-    plt.savefig('data/images/image_' + name + ".png")
+    plt.savefig(directory_name+'/images/image_' + name + ".png")
 
+  #Print basic features for a specified file
   elif args.file:
       features = {}
 
@@ -87,6 +96,7 @@ if __name__ == '__main__':
 
       pprint(features)
 
+  #Extract good and bad features, save them separately
   elif args.good and args.bad:
     df_good = pd.read_csv(args.good)
     df_bad = pd.read_csv(args.bad)
@@ -107,7 +117,7 @@ if __name__ == '__main__':
         fig, axes = plt.subplots(ncols=10, figsize=(22.9, 5))
         for ax, col in zip(axes, df.columns[idx:idx+10]):
           plot = sns.distplot(df[col], ax=ax)
-        plt.savefig('data/images/image_' + name +'_'+ str(i) + ".png")
+        plt.savefig(directory_name+'/images/image_' + name +'_'+ str(i) + ".png")
       idx+=10
 
   else:
