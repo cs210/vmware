@@ -161,11 +161,11 @@ class RFPredictor(object):
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description="Execute feature extraction for an input PE file")
-    parser.add_argument('file', type=str, help="file containing PE file features")
-    args = parser.parse_args()
+    #parser = argparse.ArgumentParser(description="Execute feature extraction for an input PE file")
+    #parser.add_argument('file', type=str, help="file containing PE file features")
+    #args = parser.parse_args()
 
-    RFPredictor(args.file).run()
+    RFPredictor('features_good_bad.csv').run()
 
 
 
