@@ -28,11 +28,11 @@ feature_extractors example:
   }
 """
 def extract_features(file_path, feature_extractors):
-    features = {}
+  features = {}
 
-    for extractor in feature_extractors:
-      kwargs = feature_extractors[extractor]
-      e = extractor(file_path)
-      features.update(e.extract(kwargs=kwargs))
+  for extractor in feature_extractors:
+    kwargs = feature_extractors[extractor]
+    e = extractor(file_path)
+    features.update(e.extract(kwargs=kwargs))
 
-    return features
+  return features
