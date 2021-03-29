@@ -1,10 +1,20 @@
 from flask import Flask, request, jsonify, make_response
+from flask_cors import CORS
 from flask_restplus import Api, Resource, fields
 from werkzeug.utils import secure_filename
 import os
 
+import sys
+sys.path.append('../../')
+import features
+import feature_utils
+
+feature_extractors = feature_utils.DEFAULT_FEATURE_EXTRACTORS
+
 # Flask app configuration
 flask_app = Flask(__name__)
+cors = CORS(flask_app, resources={r"*": {"origins": "*"}})
+
 app = Api(app = flask_app, 
       version = "1.0", 
       title = "VirusTotal++", 
@@ -47,19 +57,19 @@ class MainClass(Resource):
       # data = [val for val in formData.values()]
 
       # Run analysis (TODO: this needs to be written better)
-      process = os.popen('cd ../.. ; python3 main.py --file webapp/backend/' + UPLOAD_FOLDER + filename)
-      output = process.read()
-      print(output)
+      features = feature_utils.extract_features(UPLOAD_FOLDER + filename, feature_extractors)
+      features = str(features)
 
       response = jsonify({
         "statusCode": 200,
         "fileName": filename,
-        "output": output
+        "output": features
       })
       response.headers.add('Access-Control-Allow-Origin', '*')
       return response
 
     except Exception as error:
+      print("ERROR", error, os.getcwd())
       return jsonify({
         "statusCode": 500,
         "status": "Could not make prediction",

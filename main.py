@@ -14,15 +14,9 @@ import pefile
 
 # Relevant modules
 import features
+import feature_utils
 
-# Dictionary of available feature extractors, along with keyword arguments
-feature_extractors = {
-  features.asm.ASMExtractor: None,
-  features.section_info.SectionInfoExtractor: None,
-  features.checksum.ChecksumExtractor: None,
-  features.import_info.ImportInfoExtractor: None
-  #VirusTotalExtractor: None # should the API key be a keyword argument?
-}
+feature_extractors = feature_utils.DEFAULT_FEATURE_EXTRACTORS
 
 if __name__ == '__main__':
 
@@ -38,8 +32,11 @@ if __name__ == '__main__':
   if args.file and args.dir:
     parser.error('specify either directory or file')
 
-  if args.dir:
+  if args.file:
+    features = feature_utils.extract_features(args.file, feature_extractors)
+    pprint(features)
 
+  elif args.dir:
     rows = []
 
     for file in os.listdir(args.dir):
@@ -48,12 +45,9 @@ if __name__ == '__main__':
         features = {}
 
         try:
-          for extractor in feature_extractors:
-            kwargs = feature_extractors[extractor]
-            e = extractor(file)
-            features.update(e.extract(kwargs=kwargs))
-
+          features = feature_utils.extract_features(file, feature_extractors)
           rows.append(features)
+
         except Exception:
           continue
 
@@ -76,16 +70,6 @@ if __name__ == '__main__':
     for ax, col in zip(axes, df.columns):
       plot = sns.distplot(df[col], ax=ax)
     plt.savefig('data/images/image_' + name + ".png")
-
-  elif args.file:
-      features = {}
-
-      for extractor in feature_extractors:
-        kwargs = feature_extractors[extractor]
-        e = extractor(args.file)
-        features.update(e.extract(kwargs=kwargs))
-
-      pprint(features)
 
   elif args.good and args.bad:
     df_good = pd.read_csv(args.good)
