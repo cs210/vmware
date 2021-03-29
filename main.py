@@ -13,14 +13,12 @@ import pefile
 # import lief
 
 # Relevant modules
-from features.asm import ASMExtractor
-from features.section_info import SectionInfoExtractor
-#from features.virustotal import VirusTotalExtractor
+import features
 
 # Dictionary of available feature extractors, along with keyword arguments
 feature_extractors = {
-  ASMExtractor: None,
-  SectionInfoExtractor: None,
+  features.asm.ASMExtractor: None,
+  features.section_info.SectionInfoExtractor: None,
   #VirusTotalExtractor: None # should the API key be a keyword argument?
 }
 
