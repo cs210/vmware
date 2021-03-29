@@ -52,6 +52,7 @@ class RFPredictor(object):
         plt.show()
         '''
 
+
     # ------------------------------------
     # predict - Fits the random forest predictor with
     # multiple train and validations splits
