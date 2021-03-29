@@ -19,6 +19,8 @@ import features
 feature_extractors = {
   features.asm.ASMExtractor: None,
   features.section_info.SectionInfoExtractor: None,
+  features.checksum.ChecksumExtractor: None,
+  features.import_info.ImportInfoExtractor: None
   #VirusTotalExtractor: None # should the API key be a keyword argument?
 }
 
@@ -86,19 +88,21 @@ if __name__ == '__main__':
       pprint(features)
 
   elif args.good and args.bad:
-    df1 = pd.read_csv(args.good)
-    df2 = pd.read_csv(args.bad)
-    common_cols = pd.Series(np.intersect1d(df1.columns.values, df2.columns.values))
+    df_good = pd.read_csv(args.good)
+    df_bad = pd.read_csv(args.bad)
+    common_cols = pd.Series(np.intersect1d(df_good.columns.values, df_bad.columns.values))
+    name = str(random.randint(1111, 9999))
+    df_good = df_good[common_cols]
+    df_bad = df_bad[df_good.columns]
+    df_comb = c = pd.concat([df_good, df_bad],ignore_index=True)
+    df_comb.to_csv('features_good_bad'+name+'.csv')
 
-    df1 = df1[common_cols]
-    df2 = df2[df1.columns]
-
-    num_cols = len(df1.columns)
-    df_list = [df1, df2]
+    num_cols = len(df_good.columns)
+    df_list = [df_good, df_bad]
     idx=0
 
-    while idx<num_cols:
-      name = str(random.randint(1111, 9999))
+    while idx < num_cols:
+
       for i,df in enumerate(df_list):
         fig, axes = plt.subplots(ncols=10, figsize=(22.9, 5))
         for ax, col in zip(axes, df.columns[idx:idx+10]):
