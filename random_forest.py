@@ -43,10 +43,14 @@ class RFPredictor(object):
         x = self.X
         fig = plt.figure(figsize=(10, 5))
         plt.barh(x.columns[14:], important_features[14:])
+        plt.savefig('important_features.png')
+        return(rmse)
+        '''
         plt.xlabel("Feature Importance According to Random Forest")
         plt.ylabel("")
         plt.title("RF Importance Score")
         plt.show()
+        '''
 
 
     # ------------------------------------
