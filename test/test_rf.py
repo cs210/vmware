@@ -1,8 +1,8 @@
-from random_forest import RandomForestRegressor
+from random_forest import RFPredictor
 
 
 def test_rf():
-    rf = RandomForestRegressor('test/data/dummy.csv')
+    rf = RFPredictor('test/data/dummy.csv')
     rmse = rf.run()
 
     avg = sum(rmse)/len(rmse)
