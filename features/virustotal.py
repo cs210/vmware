@@ -3,7 +3,7 @@ import os
 import hashlib
 from virustotal_python import Virustotal
 
-VIRUSTOTAL_API_KEY = "3d48ba4a72cf740b0e97b0f1238017cd83d663b6e392e0ed7634b931512fc0ef"
+VIRUSTOTAL_API_KEY = ""
 
 class VirusTotalExtractor(FeatureExtractor):
   
@@ -34,8 +34,5 @@ class VirusTotalExtractor(FeatureExtractor):
     features['virustotal_total_positives'] = analysis_response['positives']
 
     for key, value in features.items():
-      if value==False:
-        features[key] = 0
-      else:
-        features[key] = 1
+        features[key] = int(value)
     return features

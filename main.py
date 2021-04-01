@@ -13,6 +13,7 @@ import pefile
 # import lief
 
 # Relevant modules
+'''
 from features.asm import ASMExtractor
 from features.section_info import SectionInfoExtractor
 from features.checksum import ChecksumExtractor
@@ -20,8 +21,12 @@ from features.import_info import ImportInfoExtractor
 
 #from features.virustotal import VirusTotalExtractor
 from features.imported_symbols import ImportedSymbolsExtractor
+'''
+import features
+import feature_utils
 
 # Dictionary of available feature extractors, along with keyword arguments
+'''
 numeric_feature_extractors = {
   ASMExtractor: None,
   SectionInfoExtractor: None,
@@ -33,6 +38,10 @@ numeric_feature_extractors = {
 alphabetical_feature_extractors = {
   ImportedSymbolsExtractor: None
 }
+'''
+numeric_feature_extractors = feature_utils.NUMERIC_FEATURE_EXTRACTORS
+alphabetical_feature_extractors = feature_utils.ALPHABETICAL_FEATURE_EXTRACTORS
+
 
 if __name__ == '__main__':
 
