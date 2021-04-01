@@ -13,27 +13,25 @@ import pefile
 # import lief
 
 # Relevant modules
-<<<<<<< HEAD
 '''
-=======
-
->>>>>>> 59ae73eb01b6ed08e3929dc609b78c07cc80e11c
 from features.asm import ASMExtractor
 from features.section_info import SectionInfoExtractor
 from features.checksum import ChecksumExtractor
 from features.import_info import ImportInfoExtractor
-import features
-import feature_utils
 
-feature_extractors = feature_utils.DEFAULT_FEATURE_EXTRACTORS
 
 #from features.virustotal import VirusTotalExtractor
 from features.imported_symbols import ImportedSymbolsExtractor
+
+
+# Dictionary of available feature extractors, along with keyword arguments
 '''
 import features
 import feature_utils
 
-# Dictionary of available feature extractors, along with keyword arguments
+
+feature_extractors = feature_utils.DEFAULT_FEATURE_EXTRACTORS
+
 '''
 numeric_feature_extractors = {
   ASMExtractor: None,
