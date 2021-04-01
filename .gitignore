@@ -2,4 +2,10 @@
 features/__pycache__/
 __pycache__/
 .DS_Store
+<<<<<<< HEAD
 .idea/
+=======
+.idea/
+assembly_instructions.py
+
+>>>>>>> 59ae73eb01b6ed08e3929dc609b78c07cc80e11c
