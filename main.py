@@ -15,10 +15,8 @@ import pefile
 # Relevant modules
 import feature_utils
 
-
 numeric_feature_extractors = feature_utils.NUMERIC_FEATURE_EXTRACTORS
 alphabetical_feature_extractors = feature_utils.ALPHABETICAL_FEATURE_EXTRACTORS
-
 
 if __name__ == '__main__':
 
@@ -46,22 +44,12 @@ if __name__ == '__main__':
 
   elif args.file:
     '''
-    Print basic features for a specified file
+    Print basic features for a specified file, both numeric and alphabetical features
     '''
-    num_features = {}
 
-    for extractor in numeric_feature_extractors:
-      kwargs = numeric_feature_extractors[extractor]
-      e = extractor(args.file)
-      num_features.update(e.extract(kwargs=kwargs))
-
+    num_features = feature_utils.extract_features(args.file, numeric_feature_extractors)
+    alpha_features = feature_utils.extract_features(args.file, alphabetical_feature_extractors)
     pprint(num_features)
-
-    alpha_features = {}
-    for extractor in alphabetical_feature_extractors:
-      kwargs = alphabetical_feature_extractors[extractor]
-      e = extractor(args.file)
-      alpha_features.update(e.extract(kwargs=kwargs))
     pprint(alpha_features)
 
 
