@@ -24,8 +24,8 @@ if __name__ == '__main__':
   parser.add_argument('--file', type=str, required=False, help="Input PE file to extract features for")
   parser.add_argument('--dir', type=str, required=False, help="Directory containing PE files to extract features for")
   parser.add_argument('--label', type=int, required=False, default=1, help="Label for the PE Files you are processing")
-  parser.add_argument('--good', type=str, required=False, help="Directory containing good PE files to extract features for")
-  parser.add_argument('--bad', type=str, required=False, help="Directory containing bad PE files to extract features for")
+  parser.add_argument('--good', type=str, required=False, help="CSV of good PE file-features")
+  parser.add_argument('--bad', type=str, required=False, help="CSV of bad PE file-features")
 
   args = parser.parse_args()
 
@@ -49,8 +49,8 @@ if __name__ == '__main__':
 
     num_features = feature_utils.extract_features(args.file, numeric_feature_extractors)
     alpha_features = feature_utils.extract_features(args.file, alphabetical_feature_extractors)
-    pprint(num_features)
-    pprint(alpha_features)
+    pprint("Numerical Features: ", num_features)
+    pprint("Alphabetical/String Features: ", alpha_features)
 
 
   if args.dir:
@@ -67,11 +67,7 @@ if __name__ == '__main__':
         features = {}
 
         try:
-          for extractor in numeric_feature_extractors:
-            kwargs = numeric_feature_extractors[extractor]
-            e = extractor(file)
-            features.update(e.extract(kwargs=kwargs))
-
+          features = feature_utils.extract_features(args.file, numeric_feature_extractors)
           rows.append(features)
         except Exception:
           continue
