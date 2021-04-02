@@ -49,8 +49,8 @@ if __name__ == '__main__':
 
     num_features = feature_utils.extract_features(args.file, numeric_feature_extractors)
     alpha_features = feature_utils.extract_features(args.file, alphabetical_feature_extractors)
-    pprint("Numerical Features: ", num_features)
-    pprint("Alphabetical/String Features: ", alpha_features)
+    print("Numerical Features: ", num_features)
+    print("Alphabetical/String Features: ", alpha_features)
 
 
   if args.dir:

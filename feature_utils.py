@@ -16,7 +16,9 @@ NUMERIC_FEATURE_EXTRACTORS = {
 }
 
 ALPHABETICAL_FEATURE_EXTRACTORS = {
-  features.imported_symbols.ImportedSymbolsExtractor: None
+  features.imported_symbols.ImportedSymbolsExtractor: None,
+  features.exported_symbols.ExportedSymbolsExtractor: None,
+  features.assembly_ngrams.AssembleNgrams: None
 
 }
 """
