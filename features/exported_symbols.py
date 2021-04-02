@@ -12,12 +12,7 @@ class ExportedSymbolsExtractor(FeatureExtractor):
         self.pefile_parse()
         pe = self.pefile_parsed
 
-        export_list = []
-
         if hasattr(pe, 'DIRECTORY_ENTRY_EXPORT'):
             for exp in pe.DIRECTORY_ENTRY_EXPORT.symbols:
-                export_list.append(exp.name)
-
-            features['export_list'] = export_list
-
+                features[exp.name] = 1
         return features
