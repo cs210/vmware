@@ -40,6 +40,10 @@ Extract sample features on a PE file
 ```
 python3 main.py --file=[FILENAME]
 ```
+Optionally, to specify the size of opcode ngrams, one of the features, run:
+```
+python3 main.py --file=[FILENAME] --n=[INT]
+```
 
 Extract features for multiple files into a dataframe and generate visualizations.  Specify directory containing PE files, and optionally a label for those files.  Default label value is 1.
 ```
