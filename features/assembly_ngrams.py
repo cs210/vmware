@@ -4,14 +4,14 @@ from capstone import *
 
 class AssembleNgrams(FeatureExtractor):
 
-    def __init__(self, file, pefile_parsed=None, lief_parsed=None):
+    def __init__(self, file, n, pefile_parsed=None, lief_parsed=None):
         super().__init__(file, pefile_parsed, lief_parsed)
+        self.n = n
 
     def generate_ngrams(self, disassembly):
         output = []
-        n=5
-        for i in range(len(disassembly) - n + 1):
-            output.append(disassembly[i:i + n])
+        for i in range(len(disassembly) - self.n + 1):
+            output.append(disassembly[i:i + self.n])
         return output
 
 

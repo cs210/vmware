@@ -32,12 +32,14 @@ feature_extractors example:
     features.import_info.ImportInfoExtractor: None
   }
 """
-def extract_features(file_path, feature_extractors):
+
+
+def extract_features(file_path, feature_extractors, n=5):
   features = {}
 
   for extractor in feature_extractors:
     kwargs = feature_extractors[extractor]
-    e = extractor(file_path)
+    e = extractor(file_path, n) if extractor.__name__=='AssembleNgrams' else extractor(file_path)
     features.update(e.extract(kwargs=kwargs))
 
   return features
