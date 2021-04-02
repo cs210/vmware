@@ -19,7 +19,6 @@ ALPHABETICAL_FEATURE_EXTRACTORS = {
   features.imported_symbols.ImportedSymbolsExtractor: None,
   features.exported_symbols.ExportedSymbolsExtractor: None,
   features.assembly_ngrams.AssembleNgrams: None
-
 }
 """
 Extract features from a file path given a dictionary
@@ -32,7 +31,6 @@ feature_extractors example:
     features.import_info.ImportInfoExtractor: None
   }
 """
-
 
 def extract_features(file_path, feature_extractors, n=5):
   features = {}

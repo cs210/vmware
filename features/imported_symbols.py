@@ -16,13 +16,14 @@ class ImportedSymbolsExtractor(FeatureExtractor):
         pe.parse_data_directories()
 
         import_list = []
-        for entry in pe.DIRECTORY_ENTRY_IMPORT:
-            DLL = entry.dll
-            for imp in entry.imports:
-                address = hex(imp.address)
-                import_name = imp.name
-                import_list.append(import_name)
-
-        features['import_list'] = import_list
+        if hasattr(pe, 'DIRECTORY_ENTRY_IMPORT'):
+            for entry in pe.DIRECTORY_ENTRY_IMPORT:
+                DLL = entry.dll
+                for imp in entry.imports:
+                    address = hex(imp.address)
+                    import_name = imp.name
+                    import_list.append(import_name)
+    
+            features['import_list'] = import_list
 
         return features
