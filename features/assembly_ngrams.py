@@ -10,8 +10,10 @@ class AssembleNgrams(FeatureExtractor):
 
     def generate_ngrams(self, disassembly):
         output = []
-        for i in range(len(disassembly) - self.n + 1):
+        for count, i in enumerate(range(len(disassembly) - self.n + 1)):
             output.append(disassembly[i:i + self.n])
+            if count == 20:
+                break
         return output
 
 
@@ -24,6 +26,7 @@ class AssembleNgrams(FeatureExtractor):
             for j in md.disasm(section.get_data(),
                                self.pefile_parsed.OPTIONAL_HEADER.ImageBase + section.VirtualAddress):
                 disassembly.append(j.mnemonic)
+
 
         disassembly = self.generate_ngrams(disassembly)
         return disassembly

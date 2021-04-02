@@ -48,7 +48,7 @@ if __name__ == '__main__':
     Print basic features for a specified file, both numeric and alphabetical features
     '''
     num_features = feature_utils.extract_features(args.file, numeric_feature_extractors)
-    alpha_features = feature_utils.extract_features(args.file, alphabetical_feature_extractors)
+    alpha_features = feature_utils.extract_features(args.file, alphabetical_feature_extractors, numeric=False)
     print("Numerical Features: ", num_features)
     print("Alphabetical/String Features: ", alpha_features)
 

@@ -23,7 +23,7 @@ class ImportedSymbolsExtractor(FeatureExtractor):
                     address = hex(imp.address)
                     import_name = imp.name
                     import_list.append(import_name)
-    
+
             features['import_list'] = import_list
 
         return features

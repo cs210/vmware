@@ -18,7 +18,7 @@ NUMERIC_FEATURE_EXTRACTORS = {
 ALPHABETICAL_FEATURE_EXTRACTORS = {
   features.imported_symbols.ImportedSymbolsExtractor: None,
   features.exported_symbols.ExportedSymbolsExtractor: None,
-  features.assembly_ngrams.AssembleNgrams: None
+  features.asm.ASMExtractor: None
 }
 """
 Extract features from a file path given a dictionary
@@ -32,12 +32,27 @@ feature_extractors example:
   }
 """
 
-def extract_features(file_path, feature_extractors, n=5):
-  features = {}
+def extract_features(file_path, feature_extractors, n=5, numeric=True):
+    features = {}
 
-  for extractor in feature_extractors:
-    kwargs = feature_extractors[extractor]
-    e = extractor(file_path, n) if extractor.__name__=='AssembleNgrams' else extractor(file_path)
-    features.update(e.extract(kwargs=kwargs))
+    for extractor in feature_extractors:
+      kwargs = feature_extractors[extractor]
 
-  return features
+      '''
+      Special Case: ASM Extract returns two feature dicts - one for opcodes and one for numeric data.
+      When we want the opcode ngrams from ASM extractor, we take e.extract(kwargs=kwargs)[0] and when we 
+      want numeric data, e.extract(kwargs=kwargs)[1]
+      '''
+      if extractor.__name__ == 'ASMExtractor' and numeric == False:
+        e = extractor(file_path, n)
+        features.update(e.extract(kwargs=kwargs)[0])
+
+      else:
+        e = extractor(file_path)
+        if extractor.__name__ == 'ASMExtractor' and numeric == True:
+          features.update(e.extract(kwargs=kwargs)[1])
+
+        else:
+          features.update(e.extract(kwargs=kwargs))
+
+    return features
