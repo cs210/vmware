@@ -1,5 +1,6 @@
 from .extractor import FeatureExtractor
 from capstone import *
+from collections import defaultdict
 
 class ASMExtractor(FeatureExtractor):
   
@@ -12,13 +13,15 @@ class ASMExtractor(FeatureExtractor):
 
     disassembly = ""
     opcodes = []
+    mnemonics_freq = defaultdict(int)
     for section in self.pefile_parsed.sections:
       disassembly += str(section.Name)
       md = Cs(CS_ARCH_X86, CS_MODE_32)
       for j in md.disasm(section.get_data(), self.pefile_parsed.OPTIONAL_HEADER.ImageBase + section.VirtualAddress):
         disassembly += "0x%x:\t%s\t%s\n" % (j.address, j.mnemonic, j.op_str)
         opcodes.append(j.mnemonic)
-    return disassembly, opcodes
+        mnemonics_freq[j.mnemonic + '_count'] += 1
+    return disassembly, opcodes, mnemonics_freq
 
   def generate_ngrams(self, opcodes):
     output = []
@@ -29,19 +32,16 @@ class ASMExtractor(FeatureExtractor):
     return output
   
   def extract(self, **kwargs):
-    num_features = {
-      'eax_count': None,
-    }
+    num_features = {}
     alph_features = {
       'opcode_ngrams': None
     }
 
     
-    disassembly, opcodes = self.disassemble()
+    disassembly, opcodes, mnemonics_freq = self.disassemble()
     
-    # Totally useless feature, just here as an example until we can think
-    # of something better
-    num_features['eax_count'] = disassembly.count('eax')
+    # Separated into numeric features and alphabetical features
+    num_features.update(mnemonics_freq)
     alph_features['opcode_ngrams'] = self.generate_ngrams(opcodes)
 
     return alph_features, num_features
