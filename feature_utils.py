@@ -11,14 +11,14 @@ NUMERIC_FEATURE_EXTRACTORS = {
   features.asm.ASMExtractor: None,
   features.section_info.SectionInfoExtractor: None,
   features.checksum.ChecksumExtractor: None,
-  features.import_info.ImportInfoExtractor: None,
   features.imported_symbols.ImportedSymbolsExtractor: None,
   features.exported_symbols.ExportedSymbolsExtractor: None,
   #VirusTotalExtractor: None # should the API key be a keyword argument?
 }
 
 ALPHABETICAL_FEATURE_EXTRACTORS = {
-  features.asm.ASMExtractor: None
+  features.asm.ASMExtractor: None,
+  features.import_info.ImportInfoExtractor: None,
 }
 """
 Extract features from a file path given a dictionary
