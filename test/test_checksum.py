@@ -6,4 +6,4 @@ from features.checksum import ChecksumExtractor
 
 def test_disassemble():
     extractor = ChecksumExtractor('data/goodware_example')
-    assert (type(extractor.extract()) == int)
+    assert ((list(extractor.extract().values())[0]) > 0 )
