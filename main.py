@@ -67,7 +67,7 @@ if __name__ == '__main__':
         features = {}
 
         try:
-          features = feature_utils.extract_features(args.file, numeric_feature_extractors)
+          features = feature_utils.extract_features(file, numeric_feature_extractors)
           rows.append(features)
         except Exception:
           continue
@@ -84,13 +84,13 @@ if __name__ == '__main__':
     directory = os.path.join(os.getcwd(), directory_name+'/images')
     if not os.path.isdir(directory):
       os.mkdir(directory)
-
+    '''
     # Plot the distributions of the important features
     fig, axes = plt.subplots(ncols=10, figsize=(22.9, 5))
     for ax, col in zip(axes, df.columns):
       plot = sns.distplot(df[col], ax=ax)
     plt.savefig(directory_name+'/images/image_' + name + ".png")
-
+    '''
 
   elif args.good and args.bad:
     '''
