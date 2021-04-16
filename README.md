@@ -33,6 +33,8 @@ Build and serve the frontend (in `webapp/frontend`), accessed at `127.0.0.1:3000
 npm install -g serve
 npm run build
 serve -s build -l 3000
+
+
 ```
 ### CLI Instructions
 
@@ -50,22 +52,24 @@ Extract features for multiple files into a dataframe and generate visualizations
 python3 main.py --dir=[DIRECTORY] --label=[0 or 1]
 ```
 
-Run a random forest on extracted features
-```
-python3 random_forest.py --file=[FILENAME]
-```
-
 Generate images for comparing feature distributions for associated columns for bad and good PE Files
 ```
 python3 main.py --good=[GoodPE CSV] --bad=[BadPE CSV]
 ```
 
-Train the classifier
+## Classifier Instructions
+
+Run a random forest on extracted features
+```
+python3 random_forest.py --file=[FILENAME]
+```
+
+Train the simple Neural Net classifier
 ```
 python3 classifier.py -train --file='[FEATURE CSV]'
 ```
 
-Use trained model to predict
+Use trained NN to predict
 ```
 python3 classifier.py -predict --model='models/[MODEL]'
 ```
