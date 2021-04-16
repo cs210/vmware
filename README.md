@@ -62,12 +62,12 @@ python3 main.py --good=[GoodPE CSV] --bad=[BadPE CSV]
 
 Train the classifier
 ```
-python3 classifier.py -train --file='[INSERT CSV FILE HERE]'
+python3 classifier.py -train --file='[FEATURE CSV]'
 ```
 
 Use trained model to predict
 ```
-python3 classifier.py -predict --model='models/[MODEL NAME HERE]'
+python3 classifier.py -predict --model='models/[MODEL]'
 ```
 
 
