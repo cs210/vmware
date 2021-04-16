@@ -57,7 +57,7 @@ Generate images for comparing feature distributions for associated columns for b
 python3 main.py --good=[GoodPE CSV] --bad=[BadPE CSV]
 ```
 
-## Classifier Instructions
+#### Classifier Instructions
 
 Run a random forest on extracted features
 ```
