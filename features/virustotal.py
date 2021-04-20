@@ -33,4 +33,6 @@ class VirusTotalExtractor(FeatureExtractor):
     # Total # of positives
     features['virustotal_total_positives'] = analysis_response['positives']
 
+    for key, value in features.items():
+        features[key] = int(value)
     return features

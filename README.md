@@ -1,6 +1,8 @@
 ## Project Overview 
 
-This repository defines a product that provides a comprehensive approach to file security. Specifically, we aim to (a) establish a common, open-source standard for representation of file/endpoint telemetry and (b) leverage our developed standard with machine intelligence algorithms to develop a privacy-aware malware detection system that utilizes system-level information to recognize the presence of malware in a given file.
+This repository defines a product that provides a comprehensive approach to file security. Specifically, we aim to (a) establish a common, open-source standard for representation of file/endpoint telemetry and (b) leverage our developed standard with machine intelligence algorithms to develop a privacy-aware malware detection system that utilizes system-level information to recognize the presence of malware in a given file. 
+
+Our contract of deliverables is located [here](https://docs.google.com/document/d/1x79gHbuoKGvZvkuhERIpmIIyGHzA0i0xnWqlJ6Eegs0/edit?usp=sharing), accessible by users at Stanford University.
 
 [![Test Status](https://github.com/cs210/vmware/actions/workflows/ci.yml/badge.svg)](https://github.com/cs210/vmware/actions/workflows/ci.yml)
 
@@ -40,20 +42,36 @@ Extract sample features on a PE file
 ```
 python3 main.py --file=[FILENAME]
 ```
+Optionally, to specify the size of opcode ngrams, one of the features, run:
+```
+python3 main.py --file=[FILENAME] --n=[INT]
+```
 
 Extract features for multiple files into a dataframe and generate visualizations.  Specify directory containing PE files, and optionally a label for those files.  Default label value is 1.
 ```
 python3 main.py --dir=[DIRECTORY] --label=[0 or 1]
 ```
 
+Generate images for comparing feature distributions for associated columns for bad and good PE Files
+```
+python3 main.py --good=[GoodPE CSV] --bad=[BadPE CSV]
+```
+
+#### Classifier Instructions
+
 Run a random forest on extracted features
 ```
 python3 random_forest.py --file=[FILENAME]
 ```
 
-Generate images for comparing feature distributions for associated columns for bad and good PE Files
+Train the simple Neural Net classifier
 ```
-python3 main.py --good=[GoodPE CSV] --bad=[BadPE CSV]
+python3 binary_classifier.py -train --file='[FEATURE CSV]'
+```
+
+Use trained NN to predict
+```
+python3 binary_classifier.py -predict --model='models/[MODEL]'
 ```
 
 
