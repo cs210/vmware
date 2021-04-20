@@ -5,11 +5,13 @@ from werkzeug.utils import secure_filename
 import os
 
 import sys
+import database
+
 sys.path.append('../../')
 import features
 import feature_utils
 
-feature_extractors = feature_utils.DEFAULT_FEATURE_EXTRACTORS
+feature_extractors = {**feature_utils.NUMERIC_FEATURE_EXTRACTORS, **feature_utils.ALPHABETICAL_FEATURE_EXTRACTORS}
 
 # Flask app configuration
 flask_app = Flask(__name__)
@@ -56,9 +58,10 @@ class MainClass(Resource):
       file.save(UPLOAD_FOLDER + filename)
       # data = [val for val in formData.values()]
 
-      # Run analysis (TODO: this needs to be written better)
+      # Run analysis
       features = feature_utils.extract_features(UPLOAD_FOLDER + filename, feature_extractors)
       features = str(features)
+      print(features)
 
       response = jsonify({
         "statusCode": 200,

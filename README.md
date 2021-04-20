@@ -23,6 +23,17 @@ Install requirements (second only required if running the web application)
 pip3 install -r requirements.txt
 pip3 install -r webapp/backend/requirements.txt
 ```
+You'll also need to install `faiss`, a database library for efficient similarity
+search and clustering of dense vectors. Full instructions to do so are located
+[here](https://github.com/facebookresearch/faiss/blob/master/INSTALL.md), but
+the simplest way is to install `conda` and run
+```
+conda install -c pytorch faiss-cpu
+```
+or, if you have a GPU,
+```
+conda install -c pytorch faiss-gpu
+```
 
 ### Web Application Instructions
 
