@@ -59,7 +59,6 @@ if __name__ == '__main__':
     and saving them to a csv file which is in the 'data' directory
     '''
 
-  elif args.dir:
     rows = []
 
     for file in os.listdir(args.dir):
