@@ -66,12 +66,12 @@ python3 random_forest.py --file=[FILENAME]
 
 Train the simple Neural Net classifier
 ```
-python3 classifier.py -train --file='[FEATURE CSV]'
+python3 binary_classifier.py -train --file='[FEATURE CSV]'
 ```
 
 Use trained NN to predict
 ```
-python3 classifier.py -predict --model='models/[MODEL]'
+python3 binary_classifier.py -predict --model='models/[MODEL]'
 ```
 
 
