@@ -13,6 +13,7 @@ NUMERIC_FEATURE_EXTRACTORS = {
   features.checksum.ChecksumExtractor: None,
   features.imported_symbols.ImportedSymbolsExtractor: None,
   features.exported_symbols.ExportedSymbolsExtractor: None,
+  features.data_directory_info.DataDirectoryInfoExtractor: None,
   #VirusTotalExtractor: None # should the API key be a keyword argument?
 }
 
