@@ -1,5 +1,5 @@
 import os
-import sys
+import csv
 import argparse
 import numpy as np
 from pprint import pprint
@@ -7,6 +7,8 @@ import pandas as pd
 import seaborn as sns
 import random
 import matplotlib.pyplot as plt
+
+import util
 
 # PE file related imports
 import pefile
@@ -27,8 +29,10 @@ if __name__ == '__main__':
   parser.add_argument('--good', type=str, required=False, help="CSV of good PE file-features")
   parser.add_argument('--bad', type=str, required=False, help="CSV of bad PE file-features")
   parser.add_argument('--n', type=int, required=False, help='size of n-gram to be generated')
+  parser.add_argument("--plot", type=Bool, required=False, help='generate distributions of image features')
 
   args = parser.parse_args()
+
 
   #Creating a directory and naming for outputs
   name = str(random.randint(1111, 9999))
@@ -39,19 +43,20 @@ if __name__ == '__main__':
 
   os.chdir(os.getcwd()+'/data')
 
+
   #We either specify a large directory of files or a single file to examine
   if args.file and args.dir:
     parser.error('specify either directory or file')
 
-  elif args.file:
+
+  if args.file:
     '''
     Print basic features for a specified file, both numeric and alphabetical features
     '''
-    num_features = feature_utils.extract_features(args.file, numeric_feature_extractors)
-    alpha_features = feature_utils.extract_features(args.file, alphabetical_feature_extractors, numeric=False)
+    num_features,_ = feature_utils.extract_features(args.file, numeric_feature_extractors)
+    alpha_features,_ = feature_utils.extract_features(args.file, alphabetical_feature_extractors, numeric=False)
     print("Numerical Features: ", num_features)
     print("Alphabetical/String Features: ", alpha_features)
-
 
   if args.dir:
     '''
@@ -84,13 +89,14 @@ if __name__ == '__main__':
     directory = os.path.join(os.getcwd(), directory_name+'/images')
     if not os.path.isdir(directory):
       os.mkdir(directory)
-    '''
-    # Plot the distributions of the important features
-    fig, axes = plt.subplots(ncols=10, figsize=(22.9, 5))
-    for ax, col in zip(axes, df.columns):
-      plot = sns.distplot(df[col], ax=ax)
-    plt.savefig(directory_name+'/images/image_' + name + ".png")
-    '''
+
+    if args.plot:
+      # Plot the distributions of the important features
+      fig, axes = plt.subplots(ncols=10, figsize=(22.9, 5))
+      for ax, col in zip(axes, df.columns):
+        plot = sns.distplot(df[col], ax=ax)
+      plt.savefig(directory_name+'/images/image_' + name + ".png")
+
 
   elif args.good and args.bad:
     '''
