@@ -2,6 +2,8 @@
 Utilities to aid in feature extraction from a PE file.
 """
 import features
+import util
+import pandas as pd
 
 """
 Default available feature extractors
@@ -56,4 +58,6 @@ def extract_features(file_path, feature_extractors, n=5, numeric=True):
         else:
           features.update(e.extract(kwargs=kwargs))
 
-    return features
+    df = pd.DataFrame(data=[features], columns=util.get_features())
+    sparse_feature_vector = list(df.iloc[0,:])
+    return features, sparse_feature_vector

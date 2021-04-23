@@ -2,7 +2,7 @@
 
 This repository defines a product that provides a comprehensive approach to file security. Specifically, we aim to (a) establish a common, open-source standard for representation of file/endpoint telemetry and (b) leverage our developed standard with machine intelligence algorithms to develop a privacy-aware malware detection system that utilizes system-level information to recognize the presence of malware in a given file. 
 
-Our contract of deliverables is located [here](https://docs.google.com/document/d/1x79gHbuoKGvZvkuhERIpmIIyGHzA0i0xnWqlJ6Eegs0/edit?usp=sharing), accessible by users at Stanford University.
+Our contract of deliverables is located [here](https://docs.google.com/document/d/1x79gHbuoKGvZvkuhERIpmIIyGHzA0i0xnWqlJ6Eegs0/edit?usp=sharing), accessible by users at Stanford University. Our real customer profile is located [here](https://docs.google.com/document/d/1rrA9FjiYZhglKiZ7ffLIm_0Q1DYRw4UVqIFeOD54M4Y/edit?usp=sharing), also accessible by Stanford University users.
 
 [![Test Status](https://github.com/cs210/vmware/actions/workflows/ci.yml/badge.svg)](https://github.com/cs210/vmware/actions/workflows/ci.yml)
 
@@ -35,6 +35,8 @@ Build and serve the frontend (in `webapp/frontend`), accessed at `127.0.0.1:3000
 npm install -g serve
 npm run build
 serve -s build -l 3000
+
+
 ```
 ### CLI Instructions
 
@@ -82,6 +84,7 @@ python3 random_forest.py --file=[FILENAME]
 Train the simple Neural Net classifier
 ```
 python3 binary_classifier.py -train --file='[FEATURE CSV]'
+
 ```
 
 Use trained NN to predict
