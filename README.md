@@ -35,8 +35,6 @@ Build and serve the frontend (in `webapp/frontend`), accessed at `127.0.0.1:3000
 npm install -g serve
 npm run build
 serve -s build -l 3000
-
-
 ```
 ### CLI Instructions
 
