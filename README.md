@@ -57,6 +57,21 @@ Generate images for comparing feature distributions for associated columns for b
 python3 main.py --good=[GoodPE CSV] --bad=[BadPE CSV]
 ```
 
+Combine CSV files of good/bad labels into one with mixed labels. If output path is not given, a random one will be generated.
+```
+python3 main.py --mix [FILE 1] [FILE 2] [(optional) OUTPUT FILE]
+```
+
+Perform feature selection (default to 100 features). If given one argument, it only prints top 10 features. If given two arguments, it saves the features at the file path specified by the second argument. Optionally specify number of features to select with --nfeat and number of top features to print with --nprint.
+```
+python3 main.py --select [INPUT FILE] [(optional) OUTPUT FILE] --nfeat [INT] --nprint [INT]
+```
+
+Compare distribution of a feature in good vs. malicious files and saves a density plot for visualization.
+```
+python3 main.py --compare [FEATURE NAME] [CSV FILE (with mixed labels)]
+```
+
 #### Classifier Instructions
 
 Run a random forest on extracted features

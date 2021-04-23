@@ -7,4 +7,5 @@ seaborn
 matplotlib
 pytest
 sklearn
+tensorflow
 

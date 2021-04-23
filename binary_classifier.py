@@ -24,8 +24,8 @@ class BinaryClassifier(object):
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
 
         model = keras.Sequential([
-            keras.layers.Dense(16, activation=tf.nn.relu),
-            keras.layers.Dense(16, activation=tf.nn.relu),
+            keras.layers.Dense(64, activation=tf.nn.relu),
+            #keras.layers.Dense(8, activation=tf.nn.relu),
             keras.layers.Dense(1, activation=tf.nn.sigmoid),
         ])
 
@@ -33,7 +33,7 @@ class BinaryClassifier(object):
                       loss='binary_crossentropy',
                       metrics=['accuracy'])
 
-        model.fit(X_train, y_train, epochs=50, batch_size=1)
+        model.fit(X_train, y_train, epochs=1000, batch_size=128)
         test_loss, test_acc = model.evaluate(X_test, y_test)
         print('Test accuracy:', test_acc)
 
@@ -42,7 +42,7 @@ class BinaryClassifier(object):
         if not os.path.isdir(directory):
             os.mkdir(directory)
 
-        model.save('model.h5')
+        model.save(directory + '/model.baseline')
 
         print('saved model to disk')
 

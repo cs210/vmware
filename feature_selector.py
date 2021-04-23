@@ -1,48 +1,64 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import f_classif
+#from sklearn.feature_selection import f_classif
 from sklearn.feature_selection import chi2
+import utils
 
-'''
-Util function that can concat csv files to produce one
-with mixed labels
-'''
-def concat_csv(file_1, file_2, save_file_path):
-    df1 = pd.read_csv(file_1)
-    df2 = pd.read_csv(file_2)
-    df = pd.concat([df1, df2], sort=True)
-    df.to_csv(save_file_path + '.csv')
 
 '''
 Uses sklearn SelectKBest to extract features
-Uses ANOVA F-value statistical measure (often used for classification)
+Uses Chi squared statistical measure (often used for classification)
 Reduces feature dimension to 'num_features'
 Reads from input_file, writes to output_file
 '''
-def select_features(input_file, output_file, num_features):
+def select_features(num_features, input_file, output_file=None, num_print=10):
+    # Data from csv
     df = pd.read_csv(input_file).fillna(0)
     X = df.drop('label', axis=1)
     y = df['label']
 
+    # Feature selection model
     fs = SelectKBest(score_func=chi2, k=num_features)
-    fs.fit(X, y)
+    model = fs.fit(X, y)
+
+    # Print best columns and scores
+    if num_print:
+        dfscores = pd.DataFrame(model.scores_)
+        dfcolumns = pd.DataFrame(X.columns)
+        feature_scores = pd.concat([dfcolumns,dfscores],axis=1)
+        feature_scores.columns = ['Feature Name','Score']
+        print(feature_scores.nlargest(num_print,'Score')) 
+
+    # Select best columns and optionally save
     cols = fs.get_support(indices=True)
     df_selected = df.iloc[:,cols]
-
     df_selected = df_selected.assign(label=y.values)
-    df_selected.to_csv(output_file)
+    if output_file:
+        df_selected.to_csv(output_file)
 
-def main():
-    input_file_path = 'data/features_mixed'
-    concat_csv('data/data_8355/features_8355.csv', 
-            'data/data_5252/features_5252.csv',
-            input_file_path)
+'''
+For given feature name, draw sample (if sample_size is specified) 
+from good and malicious files and plot their distributions.
+'''
+def compare_feature(feature_name, data_file, output_file=None, sample_size=None):
+    # Data from csv
+    df = pd.read_csv(data_file)
+    df = df[[feature_name, 'label']]
+    df_pivot = df.pivot(columns='label', values=feature_name)
 
-    num_features = 100
-    output_file_path = 'data/features_selected'
-    select_features(input_file_path + '.csv', 
-            output_file_path + '.csv', num_features)
+    df_plot = df_pivot.rename(columns={0: 'Malicious', 1: 'Benign'})
 
-if __name__ == '__main__':
-    main()
+    # Sample
+    if sample_size:
+        good_sample = df_plot['Benign'].sample(sample_size)
+        bad_sample = df_plot['Malicious'].sample(sample_size)
+        df_plot = pd.concat([good_sample, bad_sample], axis=1)
+
+    # Plot
+    df_plot.plot.density()
+    plt.xlabel("Feature Value")
+    if output_file:
+        plt.savefig(output_file)
+    plt.show()
