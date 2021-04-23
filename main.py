@@ -73,6 +73,7 @@ if __name__ == '__main__':
 
         try:
           features,_ = feature_utils.extract_features(file, numeric_feature_extractors)
+
           rows.append(features)
         except Exception:
           continue
@@ -96,6 +97,7 @@ if __name__ == '__main__':
       for ax, col in zip(axes, df.columns):
         plot = sns.distplot(df[col], ax=ax)
       plt.savefig(directory_name+'/images/image_' + name + ".png")
+
 
 
   elif args.good and args.bad:
