@@ -42,9 +42,10 @@ if __name__ == '__main__':
 
   args = parser.parse_args()
 
+  name = str(random.randint(1111, 9999))
 
   #Creating a directory and naming for outputs
-  directory_name = name_gen('data_')
+  directory_name = 'data_' + name
   directory = os.path.join(os.getcwd(), 'data')
   if not os.path.isdir(directory):
     os.mkdir(directory)
