@@ -39,7 +39,6 @@ def get_features():
     parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
     df = pd.read_csv(parent_dir+'/feature_list.csv')
     column_names = df.columns
-    #column_names = list(df.iloc[:, 1])
     return column_names
 
 def extract_features(file_path, feature_extractors, n=5, numeric=True):
