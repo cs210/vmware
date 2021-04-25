@@ -2,6 +2,7 @@
 Utilities to aid in feature extraction from a PE file.
 """
 import features
+import os
 import pandas as pd
 
 """
