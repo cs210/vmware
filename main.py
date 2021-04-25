@@ -8,8 +8,6 @@ import seaborn as sns
 import random
 import matplotlib.pyplot as plt
 
-import util
-
 # PE file related imports
 import pefile
 # import lief
