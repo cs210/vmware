@@ -12,3 +12,4 @@ numpy
 pyrsistent==0.14.11
 pytz==2019.1
 Werkzeug==0.16.1
+mysql-connector-python
