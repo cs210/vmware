@@ -7,8 +7,4 @@ seaborn
 matplotlib
 pytest
 sklearn
-<<<<<<< HEAD
-=======
 tensorflow
-
->>>>>>> fc66b81c0d09e2dde3c0031a14d321207020b465
