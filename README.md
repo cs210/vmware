@@ -2,7 +2,7 @@
 
 This repository defines a product that provides a comprehensive approach to file security. Specifically, we aim to (a) establish a common, open-source standard for representation of file/endpoint telemetry and (b) leverage our developed standard with machine intelligence algorithms to develop a privacy-aware malware detection system that utilizes system-level information to recognize the presence of malware in a given file. 
 
-Our contract of deliverables is located [here](https://docs.google.com/document/d/1x79gHbuoKGvZvkuhERIpmIIyGHzA0i0xnWqlJ6Eegs0/edit?usp=sharing), accessible by users at Stanford University.
+Our contract of deliverables is located [here](https://docs.google.com/document/d/1x79gHbuoKGvZvkuhERIpmIIyGHzA0i0xnWqlJ6Eegs0/edit?usp=sharing), accessible by users at Stanford University. Our real customer profile is located [here](https://docs.google.com/document/d/1rrA9FjiYZhglKiZ7ffLIm_0Q1DYRw4UVqIFeOD54M4Y/edit?usp=sharing), also accessible by Stanford University users.
 
 [![Test Status](https://github.com/cs210/vmware/actions/workflows/ci.yml/badge.svg)](https://github.com/cs210/vmware/actions/workflows/ci.yml)
 
@@ -46,6 +46,8 @@ Build and serve the frontend (in `webapp/frontend`), accessed at `127.0.0.1:3000
 npm install -g serve
 npm run build
 serve -s build -l 3000
+
+
 ```
 ### CLI Instructions
 
@@ -68,6 +70,21 @@ Generate images for comparing feature distributions for associated columns for b
 python3 main.py --good=[GoodPE CSV] --bad=[BadPE CSV]
 ```
 
+Combine CSV files of good/bad labels into one with mixed labels. If output path is not given, a random one will be generated.
+```
+python3 main.py --mix [FILE 1] [FILE 2] [(optional) OUTPUT FILE]
+```
+
+Perform feature selection (default to 100 features). If given one argument, it only prints top 10 features. If given two arguments, it saves the features at the file path specified by the second argument. Optionally specify number of features to select with --nfeat and number of top features to print with --nprint.
+```
+python3 main.py --select [INPUT FILE] [(optional) OUTPUT FILE] --nfeat [INT] --nprint [INT]
+```
+
+Compare distribution of a feature in good vs. malicious files and saves a density plot for visualization.
+```
+python3 main.py --compare [FEATURE NAME] [CSV FILE (with mixed labels)]
+```
+
 #### Classifier Instructions
 
 Run a random forest on extracted features
@@ -78,6 +95,7 @@ python3 random_forest.py --file=[FILENAME]
 Train the simple Neural Net classifier
 ```
 python3 binary_classifier.py -train --file='[FEATURE CSV]'
+
 ```
 
 Use trained NN to predict
