@@ -35,13 +35,16 @@ feature_extractors example:
   }
 """
 
-def get_features_names():
-    parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-    df = pd.read_csv(parent_dir+'/feature_list.csv')
+def is_nan(value):
+  return value != value
+
+def get_features_names(feature_list_dir_prefix='.'):
+    #parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+    df = pd.read_csv(feature_list_dir_prefix + '/feature_list.csv')
     column_names = df.columns
     return column_names
 
-def extract_features(file_path, feature_extractors, n=5, numeric=True):
+def extract_features(file_path, feature_extractors, n=5, numeric=True, feature_list_dir_prefix='.'):
     features = {}
 
     for extractor in feature_extractors:
@@ -64,6 +67,6 @@ def extract_features(file_path, feature_extractors, n=5, numeric=True):
         else:
           features.update(e.extract(kwargs=kwargs))
 
-    df = pd.DataFrame(data=[features], columns=get_features_names())
+    df = pd.DataFrame(data=[features], columns=get_features_names(feature_list_dir_prefix=feature_list_dir_prefix))
     sparse_feature_vector = list(df.iloc[0,:])
     return features, sparse_feature_vector
