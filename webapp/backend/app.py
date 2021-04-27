@@ -5,11 +5,16 @@ from werkzeug.utils import secure_filename
 import os
 
 import sys
+import numpy as np
+import pandas as pd
+import hashlib
+
 import database
 
 sys.path.append('../../')
 import features
 import feature_utils
+
 
 feature_extractors = {**feature_utils.NUMERIC_FEATURE_EXTRACTORS, **feature_utils.ALPHABETICAL_FEATURE_EXTRACTORS}
 
@@ -40,6 +45,13 @@ model = app.model('Expected POST request parameters',
             help="Example")
           })
 
+meta_database = database.MetaDatabase()
+
+# TODO: This is a hardcoded number. It needs to be fixed, but can't be repeatedly
+# re-initialized as we can only have one database. So how do we handle the addition
+# of new features? 
+feature_database = database.FeatureDatabase(num_dimensions=6744)
+
 @static_telemetry_namespace.route("/")
 class MainClass(Resource):
 
@@ -53,15 +65,35 @@ class MainClass(Resource):
   # @app.expect(model)
   def post(self):
     try:
+      # data = [val for val in formData.values()]
       file = request.files['file']
       filename = secure_filename(file.filename)
       file.save(UPLOAD_FOLDER + filename)
-      # data = [val for val in formData.values()]
+
+      file_md5 = hashlib.md5(open(UPLOAD_FOLDER + filename, 'rb').read()).hexdigest()
+
+      # TODO: Need a step here to search for a file's existence in the database
+      # and return the database values if present, perhaps by hash first.
 
       # Run analysis
-      features = feature_utils.extract_features(UPLOAD_FOLDER + filename, feature_extractors)
+      features, sparse_vector = feature_utils.extract_features(UPLOAD_FOLDER + filename, feature_extractors, feature_list_dir_prefix='../..')
       features = str(features)
-      print(features)
+      
+      # Store the sparse feature vector in a reasonable way
+      # TODO: This needs to be consistent for every future extension. How do we manage this?
+      #  without this functionality, it's difficult for people to add new extractors as our
+      #  datbase has a fixed-length feature vector size. For now, we're going to fix
+      #  the feature fector size, but this is a real issue.
+
+      # Step 1: add the file's meta information to the meta database
+      primary_key = meta_database.add(file_md5)
+
+      # Step 2: associate the primary key with the file's feature list in the feature database
+      feature_database.add(primary_key, sparse_vector)
+
+      # Step 3: sanity checks! (perhaps remove in production)
+      assert feature_database.search_primary_key(primary_key) is not None
+      assert feature_database.search_similarity(sparse_vector, k=1)[1][0] == [primary_key]
 
       response = jsonify({
         "statusCode": 200,
