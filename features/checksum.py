@@ -6,10 +6,12 @@ class ChecksumExtractor(FeatureExtractor):
     super().__init__(file, pefile_parsed, lief_parsed)
   
   def extract(self, **kwargs):
-    features = {}
-
     self.pefile_parse()
 
-    features['checksum'] = self.pefile_parsed.generate_checksum()
+################### INSERT YOU CODE HERE ###################
 
-    return features
+
+
+
+###################### CODE ENDS HERE 33####################
+
