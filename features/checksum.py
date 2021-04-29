@@ -11,7 +11,5 @@ class ChecksumExtractor(FeatureExtractor):
 ################### INSERT YOU CODE HERE ###################
 
 
-
-
 ###################### CODE ENDS HERE 33####################
 

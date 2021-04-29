@@ -12,11 +12,13 @@ Default available feature extractors
 NUMERIC_FEATURE_EXTRACTORS = {
   features.asm.ASMExtractor: None,
   features.section_info.SectionInfoExtractor: None,
-  features.checksum.ChecksumExtractor: None,
   features.imported_symbols.ImportedSymbolsExtractor: None,
   features.exported_symbols.ExportedSymbolsExtractor: None,
   features.data_directory_info.DataDirectoryInfoExtractor: None,
-  #VirusTotalExtractor: None # should the API key be a keyword argument?
+#################### INSERT CODE HERE #############################
+
+
+##################### END CODE HERE #############################
 }
 
 ALPHABETICAL_FEATURE_EXTRACTORS = {

@@ -2,6 +2,7 @@ import os
 import csv
 import argparse
 import numpy as np
+import json
 from pprint import pprint
 import pandas as pd
 import seaborn as sns
@@ -28,7 +29,7 @@ if __name__ == '__main__':
   parser.add_argument('--label', type=int, required=False, default=1, help="Label for the PE Files you are processing")
   parser.add_argument('--good', type=str, required=False, help="CSV of good PE file-features")
   parser.add_argument('--bad', type=str, required=False, help="CSV of bad PE file-features")
-  parser.add_argument("--plot", type=Bool, required=False, help='generate distributions of image features')
+  parser.add_argument("--plot", type=bool, required=False, help='generate distributions of image features')
 
   parser.add_argument('--ngram', type=int, required=False, help='size of n-gram to be generated')
   parser.add_argument('--select', type=str, required=False, nargs='+', help='Input CSV file (arg[0]), save to arg[1]')
@@ -50,7 +51,7 @@ if __name__ == '__main__':
   if not os.path.isdir(directory):
     os.mkdir(directory)
 
-  os.chdir(os.getcwd()+'/data')
+  #os.chdir(os.getcwd()+'/data')
 
 
   #We either specify a large directory of files or a single file to examine
@@ -64,8 +65,10 @@ if __name__ == '__main__':
     '''
     num_features,_ = feature_utils.extract_features(args.file, numeric_feature_extractors)
     alpha_features,_ = feature_utils.extract_features(args.file, alphabetical_feature_extractors, numeric=False)
-    print("Numerical Features: ", num_features)
-    print("Alphabetical/String Features: ", alpha_features)
+    for key, value in num_features.items():
+      print(key, ' : ', value)
+
+
 
 
 
