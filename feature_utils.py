@@ -15,10 +15,7 @@ NUMERIC_FEATURE_EXTRACTORS = {
   features.imported_symbols.ImportedSymbolsExtractor: None,
   features.exported_symbols.ExportedSymbolsExtractor: None,
   features.data_directory_info.DataDirectoryInfoExtractor: None,
-#################### INSERT CODE HERE #############################
 
-
-##################### END CODE HERE #############################
 }
 
 ALPHABETICAL_FEATURE_EXTRACTORS = {
